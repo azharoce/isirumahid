@@ -39,8 +39,21 @@ type ServerError interface {
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	s.router.ServeHTTP(w, r)
 }
-
+func (s *Server) TestingApps(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	writeJSON(
+		w,
+		http.StatusCreated,
+		&ContactResponse{
+			Contact: &Contact{
+				Id:    1,
+				Email: `sss`,
+				Name:  `ss`,
+			},
+		},
+	)
+}
 func (s *Server) setupRoutes() {
+	s.router.POST("/testing", s.TestingApps)
 	s.router.POST("/contacts", s.AddContact)
 	s.router.GET("/contacts/:email", s.GetContactByEmail)
 
