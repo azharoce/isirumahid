@@ -22,7 +22,7 @@ jobs:
           command: |
             echo "my artifact file" > /tmp/books;
             # mkdir /tmp/books;
-            echo "my books files in a dir" > /tmp/books;
+            echo "my books files in a dir" > /tmp/books/test;
 
       - store_test_results:
           path: /tmp/books
