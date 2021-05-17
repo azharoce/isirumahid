@@ -1,0 +1,29 @@
+# github.com/cznic/ql v1.2.0
+## explicit
+# github.com/davecgh/go-spew v1.1.1
+## explicit
+github.com/davecgh/go-spew/spew
+# github.com/julienschmidt/httprouter v0.0.0-20170104185816-8a45e95fc75c
+## explicit
+github.com/julienschmidt/httprouter
+# github.com/lib/pq v0.0.0-20170309164912-e4af84aab01e
+## explicit
+github.com/lib/pq
+github.com/lib/pq/oid
+# github.com/mattes/migrate v0.0.0-20170302213955-305a63a4472b
+## explicit
+github.com/mattes/migrate/driver
+github.com/mattes/migrate/driver/postgres
+github.com/mattes/migrate/file
+github.com/mattes/migrate/migrate
+github.com/mattes/migrate/migrate/direction
+github.com/mattes/migrate/pipe
+# github.com/mattn/go-sqlite3 v1.10.0
+## explicit
+# github.com/pmezard/go-difflib v1.0.0
+## explicit
+github.com/pmezard/go-difflib/difflib
+# github.com/stretchr/testify v0.0.0-20170130113145-4d4bfba8f1d1
+## explicit
+github.com/stretchr/testify/assert
+github.com/stretchr/testify/require

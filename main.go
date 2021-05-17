@@ -1,27 +1,42 @@
 package main
 
 import (
-	"github.com/azharoce/isirumahid/controllers"
-	"github.com/azharoce/isirumahid/models"
+	"database/sql"
+	"fmt"
+	"net/http"
+	"os"
 
-	"github.com/gin-gonic/gin"
+	"github.com/azharoce/isirumahid/service"
+	_ "github.com/mattes/migrate/driver/postgres"
+	"github.com/mattes/migrate/migrate"
 )
 
 func main() {
-	r := gin.Default()
+	db := SetupDB()
+	server := service.NewServer(db)
+	http.HandleFunc("/", server.ServeHTTP)
+	http.ListenAndServe(":8080", nil)
+}
 
-	// Connect to database
-	models.ConnectDatabase()
+func SetupDB() *service.Database {
+	databaseUrl := os.Getenv("CONTACTS_DB_URL")
+	if databaseUrl == "" {
+		panic("CONTACTS_DB_URL must be set!")
+	}
 
-	// Routes
-	r.GET("/books", controllers.FindBooks)
-	r.GET("/books/:id", controllers.FindBook)
-	r.POST("/books", controllers.CreateBook)
-	r.PATCH("/books/:id", controllers.UpdateBook)
-	r.DELETE("/books/:id", controllers.DeleteBook)
+	sqlFiles := "./db/migrations"
+	if sqlFilesEnv := os.Getenv("CONTACTS_DB_MIGRATIONS"); sqlFilesEnv != "" {
+		sqlFiles = sqlFilesEnv
+	}
+	allErrors, ok := migrate.ResetSync(databaseUrl, sqlFiles)
+	if !ok {
+		panic(fmt.Sprintf("%+v", allErrors))
+	}
 
-	// Run the server
-	r.Run()
-	// r.Run(":9090")
-	// router.Run(":8080")
+	db, err := sql.Open("postgres", databaseUrl)
+	if err != nil {
+		panic(fmt.Sprintf("Unable to open DB connection: %+v", err))
+	}
+
+	return &service.Database{db}
 }
