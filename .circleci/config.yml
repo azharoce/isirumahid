@@ -20,7 +20,7 @@ jobs:
       - run:
           name: IsiRumahid REST
           command: |
-            echo "my artifact file" > /tmp/books;
+            #echo "my artifact file" > /tmp/books;
             # mkdir /tmp/books;
             #echo "my books files in a dir" > /tmp/books/test;
 
