@@ -2,4 +2,8 @@ module github.com/azharoce/isirumahid
 
 go 1.15
 
-require github.com/360EntSecGroup-Skylar/excelize v1.4.1 // indirect
+require (
+	github.com/gin-gonic/gin v1.6.3
+	github.com/jinzhu/gorm v1.9.12
+)
+
