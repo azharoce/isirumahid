@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/azharoce/gin-bookstore/controllers"
-	"github.com/azharoce/gin-bookstore/models"
+	"github.com/azharoce/isirumahid/controllers"
+	"github.com/azharoce/isirumahid/models"
 
 	"github.com/gin-gonic/gin"
 )

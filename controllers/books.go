@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/azharoce/gin-bookstore/models"
+	"github.com/azharoce/isirumahid/models"
 	"github.com/gin-gonic/gin"
 )
 
