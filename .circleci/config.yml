@@ -18,9 +18,18 @@ jobs:
           paths:
             - "/go/pkg/mod"
       - run:
-          name: Run tests
+          name: IsiRumahid REST
           command: |
-            mkdir -p /tmp/test-reports
-            gotestsum --junitfile /tmp/test-reports/unit-tests.xml
+            echo "my artifact file" > /tmp/books;
+            mkdir /tmp/books;
+            echo "my books files in a dir" > /tmp/abooks;
+
       - store_test_results:
-          path: /tmp/test-reports/books
+          path: /tmp/books
+
+      - store_artifacts:
+          path: /tmp/books
+          destination: books
+
+      - store_artifacts:
+          path: /tmp/books
