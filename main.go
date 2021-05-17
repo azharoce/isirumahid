@@ -22,4 +22,6 @@ func main() {
 
 	// Run the server
 	r.Run()
+	// r.Run(":9090")
+	// router.Run(":8080")
 }
