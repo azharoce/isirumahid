@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Run tests
           command: |
-            mkdir -p /tmp/books
-            gotestsum --junitfile /tmp/books
+            mkdir -p /tmp/test-reports
+            gotestsum --junitfile /tmp/test-reports/unit-tests.xml
       - store_test_results:
           path: /books
