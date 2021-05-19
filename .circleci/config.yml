@@ -67,7 +67,7 @@ jobs: # basic units of work in a run
       - store_test_results: # upload test results for display in Test Summary
           path: /tmp/test-results
 
-       - run:
+      - run:
           name: Build Docker image
           command: docker build -t $IMAGE_NAME:latest .
 
