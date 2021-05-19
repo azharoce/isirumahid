@@ -1,6 +1,15 @@
 version: 2 # use CircleCI 2.0
+    
+executors:
+  docker-publisher:
+    environment:
+      IMAGE_NAME: azharoce/isirumahid
+    docker:
+      - image: circleci/buildpack-deps:stretch
+
 jobs: # basic units of work in a run
   build: # runs not using Workflows must have a `build` job as entry point
+    executor: docker-publisher
     docker: # run the steps with Docker
       # CircleCI Go images available at: https://hub.docker.com/r/circleci/golang/
       - image: circleci/golang:1.12
@@ -60,46 +69,6 @@ jobs: # basic units of work in a run
           command: |
             echo 5
 
-      - store_artifacts: # upload test summary for display in Artifacts
-          path: /tmp/test-results
-          destination: raw-test-output
-
-      - store_test_results: # upload test results for display in Test Summary
-          path: /tmp/test-results
-
-      - run:
-          name: Build Docker image
-          command: docker build -t $IMAGE_NAME:latest .
-
-  publish-latest:
-    environment:
-      IMAGE_NAME: building-on-ci
-    docker:
-      - image: circleci/buildpack-deps:stretch
-    steps:
-      - setup_remote_docker
-      - run:
-          name: Publish Docker Image to Docker Hub
-          command: |
-            echo "qwertyuiop" | docker login -u "azharoce" --password-stdin
-            docker push $IMAGE_NAME:latest
-workflows:
-  version: 2
-  build-workflow:
-    jobs:
-      - build
-
-version: 2.1
-executors:
-  docker-publisher:
-    environment:
-      IMAGE_NAME: azharoce/isirumahid
-    docker:
-      - image: circleci/buildpack-deps:stretch
-jobs:
-  build:
-    executor: docker-publisher
-    steps:
       - checkout
       - setup_remote_docker
       - run:
@@ -113,6 +82,22 @@ jobs:
           root: .
           paths:
             - ./image.tar
+
+      - store_artifacts: # upload test summary for display in Artifacts
+          path: /tmp/test-results
+          destination: raw-test-output
+
+      - store_test_results: # upload test results for display in Test Summary
+          path: /tmp/test-results
+
+      - run:
+          name: Build Docker image
+          command: docker build -t $IMAGE_NAME:latest .
+
+
+    
+    
+      
   publish-latest:
     executor: docker-publisher
     steps:
@@ -147,6 +132,8 @@ jobs:
             docker tag $IMAGE_NAME:latest $IMAGE_NAME:$IMAGE_TAG
             docker push $IMAGE_NAME:latest
             docker push $IMAGE_NAME:$IMAGE_TAG
+
+   
 workflows:
   version: 2
   build-master:
@@ -177,3 +164,7 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
+  
+  
+
+  
