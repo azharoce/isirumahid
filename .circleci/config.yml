@@ -133,38 +133,11 @@ jobs: # basic units of work in a run
             docker push $IMAGE_NAME:latest
             docker push $IMAGE_NAME:$IMAGE_TAG
 
-   
 workflows:
   version: 2
-  build-master:
+  build-workflow:
     jobs:
-      - build:
-          filters:
-            branches:
-              only: main
-      - publish-latest:
-          requires:
-            - build
-          filters:
-            branches:
-              only: main
-  build-tags:
-    jobs:
-      - build:
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
-      - publish-tag:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
-  
-  
+      - build
+
 
   
