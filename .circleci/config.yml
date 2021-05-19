@@ -9,6 +9,10 @@ executors:
 
 jobs: # basic units of work in a run
   build: # runs not using Workflows must have a `build` job as entry point
+    machine:
+      image: ubuntu-1604:202007-01
+      docker_layer_caching: true    # default - false
+      
     executor: docker-publisher
     docker: # run the steps with Docker
       # CircleCI Go images available at: https://hub.docker.com/r/circleci/golang/
@@ -141,3 +145,4 @@ workflows:
 
 
   
+    
