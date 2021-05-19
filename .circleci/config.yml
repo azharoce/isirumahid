@@ -59,7 +59,13 @@ jobs: # basic units of work in a run
           command: |
             sleep 5
             curl --retry 10 --retry-delay 1 -X POST --header "Content-Type: application/json" -d '{"email":"test@example.com","name":"Test User"}' http://localhost:8080/contacts
-
+      - run:
+          name: Push to docker hub 
+          command: |
+            docker build  isirumahid:local 
+            docker tag isirumahid:local isirumahid:latest
+            docker push isirumahid:latest
+            
       - store_artifacts: # upload test summary for display in Artifacts
           path: /tmp/test-results
           destination: raw-test-output
