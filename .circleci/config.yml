@@ -14,6 +14,7 @@ jobs: # basic units of work in a run
 
     environment: # environment variables for the build itself
       TEST_RESULTS: /tmp/test-results # path to where test results will be saved
+      IMAGE_NAME: azharoce/isirumahid
 
     steps: # steps that comprise the `build` job
       - checkout # check out source code to working directory
@@ -59,19 +60,30 @@ jobs: # basic units of work in a run
           command: |
             sleep 5
             curl --retry 10 --retry-delay 1 -X POST --header "Content-Type: application/json" -d '{"email":"test@example.com","name":"Test User"}' http://localhost:8080/contacts
-      - run:
-          name: Push to docker hub 
-          command: |
-            docker build  isirumahid:local 
-            docker tag isirumahid:local isirumahid:latest
-            docker push isirumahid:latest
-            
+
       - store_artifacts: # upload test summary for display in Artifacts
           path: /tmp/test-results
           destination: raw-test-output
 
       - store_test_results: # upload test results for display in Test Summary
           path: /tmp/test-results
+
+       - run:
+          name: Build Docker image
+          command: docker build -t $IMAGE_NAME:latest .
+
+  publish-latest:
+    environment:
+      IMAGE_NAME: building-on-ci
+    docker:
+      - image: circleci/buildpack-deps:stretch
+    steps:
+      - setup_remote_docker
+      - run:
+          name: Publish Docker Image to Docker Hub
+          command: |
+            echo "qwertyuiop" | docker login -u "azharoce" --password-stdin
+            docker push $IMAGE_NAME:latest
 workflows:
   version: 2
   build-workflow:

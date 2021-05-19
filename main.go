@@ -15,7 +15,8 @@ func main() {
 	db := SetupDB()
 	server := service.NewServer(db)
 	http.HandleFunc("/", server.ServeHTTP)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":9090", nil)
+	// http.ListenAndServe(":8080", nil)
 }
 
 func SetupDB() *service.Database {
